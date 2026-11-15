@@ -5,9 +5,9 @@ N=(-33,-31,-18,-14,14,18,31,33)
 B=(-17,-15,15,17)
 R=(-16,-1,1,16)
 Q=B+R
-T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","aiYQaaQQIAAAA9919111911191119111")];T[3:3]=[T[2]]*3
+T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","CIIIIUQQIYYYIQYYIUUYIQUYIQQQCIII","aiYQaaQQIAAAA9919111911191119111")];T[4:4]=[T[3]]*2
 M=100000
-D=80000
+D=100000
 n=0
 TT={}
 class O(Exception):pass
@@ -109,7 +109,7 @@ def X(s):
   if not p:continue
   a=abs(p);v=V[a];i=min(x&7,7-(x&7))+((7-(x>>4)if p<0 else x>>4)<<2)
   w+=v+T[a][i]if p>0 else-v-T[a][i]
-  if a==1 and i>>2>1 and not any(b[y]==-p for o in(-1,0,1)for y in range(x+o+16*p,64+64*p,16*p)):w+=(i>>2)**2*3*p
+  if a==1 and not any(b[y]==-p for o in(-1,0,1)for y in range(x+o+16*p,64+64*p,16*p)):w+=(i>>2)**2*3*p
  return w*t
 def J(st,ms,tm):
  b=st[0]
@@ -118,7 +118,7 @@ def J(st,ms,tm):
   if m==tm:return 1<<20
   v=b[m[1]]
   if v or(abs(b[m[0]])==1 and(m[0]&7)!=(m[1]&7)):return 10000+(V[abs(v)]or 100)*10-V[abs(b[m[0]])]
-  return 0
+  return 5000 if m[2]==5 else 0
  ms.sort(key=k,reverse=True)
 def q(st,a,be,pl):
  global n;n+=1
