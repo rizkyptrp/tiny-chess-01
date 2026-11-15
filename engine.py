@@ -5,7 +5,7 @@ N=(-33,-31,-18,-14,14,18,31,33)
 B=(-17,-15,15,17)
 R=(-16,-1,1,16)
 Q=B+R
-T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","CIIIIUQQIYYYIQYYIUUYIQUYIQQQCIII","aiYQaaQQIAAAA9919111911191119111")];T[4:4]=[T[3]]*2
+T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","aiYQaaQQIAAAA9919111911191119111")];T[3:3]=[T[2]]*3
 M=100000
 D=100000
 n=0
@@ -21,7 +21,7 @@ def F(f):
   else:
    v="pnbrqk".index(c.lower())+1;b[i]=v*(c<"a"or-1);i+=1
  c=sum(1<<i for i,k in enumerate("KQkq")if k in p[2])
- return[b,1-2*(p[1]=="b"),c,ord(p[3][0])+int(p[3][1])*16-113 if p[3]!="-"else-1,b.index(6),b.index(-6)]
+ return[b,1-2*(p[1]=="b"),c,-1,b.index(6),b.index(-6)]
 def G(b,s,c):
  for w,v in((N,2*c),(Q,6*c),((-15*c,-17*c),c)):
   for d in w:
@@ -118,7 +118,7 @@ def J(st,ms,tm):
   if m==tm:return 1<<20
   v=b[m[1]]
   if v or(abs(b[m[0]])==1 and(m[0]&7)!=(m[1]&7)):return 10000+(V[abs(v)]or 100)*10-V[abs(b[m[0]])]
-  return 5000 if m[2]==5 else 0
+  return 0
  ms.sort(key=k,reverse=True)
 def q(st,a,be,pl):
  global n;n+=1
@@ -141,11 +141,15 @@ def s(st,d,a,be,pl):
  global n;n+=1
  if n>D:raise O
  if d<=0:return q(st,a,be,pl)
- k=(bytes(x+6 for x in st[0]),st[1],st[2])
+ b,t,c=st[0],st[1],st[2]
+ k=(bytes(x+6 for x in b),t,c)
  e=TT.get(k)
  if e and e[0]>=d and(e[2]==0 or e[2]==1 and e[1]>=be or e[2]==2 and e[1]<=a):return e[1]
  ms=Y(st)
- if not ms:return -M+pl if G(st[0],st[4+(st[1]<0)],-st[1])else 0
+ if not ms:return -M+pl if G(b,st[4+(t<0)],-t)else 0
+ if d>2 and not G(b,st[4+(t<0)],-t):
+  w=-s([b,-t,c,-1,st[4],st[5]],d-3,-be,1-be,pl+1)
+  if w>=be:return be
  J(st,ms,e[3]if e else None)
  bs=-M;bm=None;fl=2
  for m,st2 in ms:
