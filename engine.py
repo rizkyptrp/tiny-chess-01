@@ -7,21 +7,21 @@ R=(-16,-1,1,16)
 Q=B+R
 T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","CIIIIUQQIYYYIQYYIUUYIQUYIQQQCIII","aiYQaaQQIAAAA9919111911191119111")];T[4:4]=[T[3]]*2
 M=100000
-D=40000
+D=80000
 n=0
 TT={}
-KL=[0]*128
+KL=[0]*64
 class O(Exception):pass
 def P(p,d):
  r=urllib.request.Request(U+p,data=json.dumps(d).encode())
  with urllib.request.urlopen(r)as x:return json.load(x)
 def F(f):
- b=[0]*128;p=f.split();r=7;y=0
+ b=[0]*128;p=f.split();i=112
  for c in p[0]:
-  if c=="/":r-=1;y=0
-  elif c.isdigit():y+=int(c)
+  if c=="/":i-=24
+  elif c.isdigit():i+=int(c)
   else:
-   v="pnbrqk".index(c.lower())+1;b[r*16+y]=v*(c<"a"or-1);y+=1
+   v="pnbrqk".index(c.lower())+1;b[i]=v*(c<"a"or-1);i+=1
  c=sum(1<<i for i,k in enumerate("KQkq")if k in p[2])
  return[b,1-2*(p[1]=="b"),c,b.index(6),b.index(-6)]
 def G(b,s,c):
@@ -84,7 +84,7 @@ def Y(s,C=0):
   k=s[3+(t<0)];h=4+112*(t<0)
   if k==h:
    for o in(1,-1):
-    if c&1<<(o<0)+2*(t<0)and not b[h+o]and not b[h+2*o]and(o>0 or not b[h+3*o])and not G(b,h,-t)and not G(b,h+o,-t)and not G(b,h+2*o,-t):m.append((h,h+2*o,0))
+    if c&1<<(o<0)+2*(t<0)and not b[h+o]and not b[h+2*o]and(o>0 or not b[h+3*o])and not(G(b,h,-t)or G(b,h+o,-t)or G(b,h+2*o,-t)):m.append((h,h+2*o,0))
  r=[]
  for z in m:
   s2=A(s,z)
@@ -112,6 +112,7 @@ def X(s):
   if not p:continue
   a=abs(p);v=V[a];i=min(x&7,7-(x&7))+((7-(x>>4)if p<0 else x>>4)<<2)
   w+=v+T[a][i]if p>0 else-v-T[a][i]
+  if a==1 and i>>2>1 and not any(b[y]==-p for o in(-1,0,1)for y in range(x+o+16*p,64+64*p,16*p)):w+=(i>>2)**2*3*p
  return w*t
 def J(st,ms,tm,pl):
  b=st[0]
@@ -122,12 +123,11 @@ def J(st,ms,tm,pl):
   if v or(abs(b[m[0]])==1 and(m[0]&7)!=(m[1]&7)):return 10000+(V[abs(v)]or 100)*10-V[abs(b[m[0]])]
   return 9000 if m==KL[pl]else 5000 if m[2]==5 else 0
  ms.sort(key=k,reverse=True)
-def q(st,a,be,d,pl):
+def q(st,a,be,pl):
  global n;n+=1
  if n>D:raise O
- b=st[0];t=st[1];ck=G(b,st[3+(t<0)],-t)
- if ck:
-  if d<=0:return X(st)
+ b=st[0];t=st[1]
+ if G(b,st[3+(t<0)],-t):
   ms=Y(st)
   if not ms:return -M+pl
  else:
@@ -137,13 +137,13 @@ def q(st,a,be,d,pl):
   ms=Y(st,1)
  J(st,ms,None,0)
  for m,st2 in ms:
-  w=-q(st2,-be,-a,d-1 if ck else d,pl+1);a=max(a,w)
+  w=-q(st2,-be,-a,pl+1);a=max(a,w)
   if a>=be:return be
  return a
 def s(st,d,a,be,pl):
  global n;n+=1
  if n>D:raise O
- if d<=0:return q(st,a,be,8,pl)
+ if d<=0:return q(st,a,be,pl)
  k=(bytes(x+6 for x in st[0]),st[1],st[2])
  e=TT.get(k)
  if e and e[0]>=d and(e[2]==0 or e[2]==1 and e[1]>=be or e[2]==2 and e[1]<=a):return e[1]
@@ -177,9 +177,7 @@ def r(fen,legal):
   bm=cu
   ms.sort(key=lambda e:-e[0])
  return bm
-while True:
- g=P("/game",{})
- if g["status"]=="done":break
+while(g:=P("/game",{}))["status"]!="done":
  while g["status"]=="your_move":
   L=g["legal_moves"]
   try:mv=r(g["fen"],L)
