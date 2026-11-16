@@ -6,8 +6,7 @@ B=(-17,-15,15,17)
 R=(-16,-1,1,16)
 Q=B+R
 T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","aiYQaaQQIAAAA9919111911191119111")];T[3:3]=[T[2]]*3
-M=100000
-D=100000
+M=D=100000
 n=0
 TT={}
 class O(Exception):pass
@@ -117,7 +116,7 @@ def J(st,ms,tm):
   m=p[0]
   if m==tm:return 1<<20
   v=b[m[1]]
-  if v or(abs(b[m[0]])==1 and(m[0]&7)!=(m[1]&7)):return 10000+(V[abs(v)]or 100)*10-V[abs(b[m[0]])]
+  if v:return 10000+(V[abs(v)]or 100)*10-V[abs(b[m[0]])]
   return 0
  ms.sort(key=k,reverse=True)
 def q(st,a,be,pl):
@@ -152,8 +151,8 @@ def s(st,d,a,be,pl):
   if w>=be:return be
  J(st,ms,e[3]if e else None)
  bs=-M;bm=None;fl=2
- for m,st2 in ms:
-  w=-s(st2,d-1,-be,-a,pl+1)
+ for i,(m,st2) in enumerate(ms):
+  w=-s(st2,d-1-(i>3<d and not b[m[1]]),-be,-a,pl+1)
   if w>bs:bs=w;bm=m
   if bs>a:a=bs;fl=0
   if a>=be:
