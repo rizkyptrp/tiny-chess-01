@@ -6,7 +6,8 @@ B=(-17,-15,15,17)
 R=(-16,-1,1,16)
 Q=B+R
 T=[None]+[[ord(c)-81 for c in t]for t in("QQQQV[[=VLGQQQQeVV[j[[eoppppQQQQ","15==5CQU=UY]=Q]a=U]a=QY]5CQQ15==","aiYQaaQQIAAAA9919111911191119111")];T[3:3]=[T[2]]*3
-M=D=100000
+M=100000
+D=120000
 n=0
 TT={}
 class O(Exception):pass
